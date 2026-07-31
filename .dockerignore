@@ -1,0 +1,13 @@
+.gradle
+build
+.git
+.github
+.idea
+.vscode
+docs
+out
+*.iml
+*.log
+README.md
+LICENSE
+CHANGELOG.md

@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: CentralizedCounsellingSystem
+
+  profiles:
+    active: local
