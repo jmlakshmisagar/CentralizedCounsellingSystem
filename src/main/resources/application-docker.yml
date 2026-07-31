@@ -4,7 +4,7 @@ server:
 spring:
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/ccs_db
+    url: jdbc:postgresql://ccs-postgres:5432/ccs_db
     username: ccs_user
     password: ccs_password
     driver-class-name: org.postgresql.Driver
