@@ -8,6 +8,7 @@ class CentralizedCounsellingSystemApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

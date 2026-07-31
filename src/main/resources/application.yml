@@ -3,4 +3,4 @@ spring:
     name: CentralizedCounsellingSystem
 
   profiles:
-    active: local
+    active: ${SPRING_PROFILES_ACTIVE:local}

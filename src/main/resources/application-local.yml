@@ -2,6 +2,7 @@ server:
   port: 8080
 
 spring:
+
   datasource:
     url: jdbc:postgresql://localhost:5432/ccs_db
     username: ccs_user
@@ -24,6 +25,7 @@ spring:
     default-property-inclusion: non_null
 
 management:
+
   endpoints:
     web:
       exposure:
@@ -33,32 +35,20 @@ management:
     health:
       show-details: always
 
-  info:
-    env:
-      enabled: true
-
 logging:
   level:
     root: INFO
     com.ccs: DEBUG
-    org.springframework.web: INFO
-    org.hibernate.SQL: DEBUG
-    org.hibernate.orm.jdbc.bind: TRACE
 
 springdoc:
+
   api-docs:
     path: /api-docs
 
   swagger-ui:
     path: /swagger-ui.html
-    operationsSorter: method
-    tagsSorter: alpha
-    display-request-duration: true
-    try-it-out-enabled: true
 
 info:
   application:
     name: CentralizedCounsellingSystem
-    description: Centralized Counselling Management System
     version: 1.0.0
-    developer: Lakshmisagar JM
