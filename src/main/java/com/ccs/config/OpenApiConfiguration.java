@@ -38,7 +38,7 @@ public class OpenApiConfiguration {
 
                         .contact(new Contact()
                                 .name("Lakshmisagar JM")
-                                .email("your-email@example.com"))
+                                .email("jmlakshmisagar@example.com"))
 
                         .license(new License()
                                 .name("MIT License")))
