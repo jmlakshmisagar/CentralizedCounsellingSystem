@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface CounsellingSessionRepository
         extends JpaRepository<CounsellingSession, Long> {
 
-    Optional<CounsellingSession> findBySessionYear(Integer sessionYear);
+    Optional<CounsellingSession> findBySessionName(String sessionName);
 
-    boolean existsBySessionYear(Integer sessionYear);
+    boolean existsBySessionName(String sessionName);
 
 }

@@ -4,7 +4,6 @@ public enum RoundStatus {
 
     UPCOMING,
     ACTIVE,
-    COMPLETED,
-    CANCELLED
+    COMPLETED
 
 }

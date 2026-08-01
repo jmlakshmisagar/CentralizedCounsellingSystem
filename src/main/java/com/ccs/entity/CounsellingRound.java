@@ -2,45 +2,43 @@ package com.ccs.entity;
 
 import com.ccs.common.BaseEntity;
 import com.ccs.enums.RoundStatus;
-import com.ccs.enums.RoundType;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(
         name = "counselling_round",
-        indexes = {
-                @Index(name = "idx_round_number", columnList = "round_number")
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {
+                        "session_id",
+                        "round_number"
+                })
         }
 )
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class CounsellingRound extends BaseEntity {
-
-    @Column(name = "round_number", nullable = false)
-    private Integer roundNumber;
-
-    @Column(name = "round_name", nullable = false, length = 50)
-    private String roundName;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "round_type", nullable = false)
-    private RoundType roundType;
-
-    @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
-
-    @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id", nullable = false)
     private CounsellingSession counsellingSession;
+
+    @Column(nullable = false)
+    private Integer roundNumber;
+
+    @Column(nullable = false, length = 100)
+    private String roundName;
+
+    @Column(nullable = false)
+    private LocalDate startDate;
+
+    @Column(nullable = false)
+    private LocalDate endDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

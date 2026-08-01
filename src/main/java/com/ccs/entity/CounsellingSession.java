@@ -6,7 +6,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,34 +13,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(
-        name = "counselling_session",
-        indexes = {
-                @Index(
-                        name = "idx_session_year",
-                        columnList = "session_year"
-                )
-        }
-)
+import java.time.LocalDate;
+
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Entity
+@Table(name = "counselling_session")
 public class CounsellingSession extends BaseEntity {
 
-    @Column(name = "session_year", nullable = false, unique = true)
-    private Integer sessionYear;
-
-    @Column(name = "session_name", nullable = false, length = 100)
+    @Column(nullable = false, unique = true, length = 100)
     private String sessionName;
 
-    @Column(name = "start_date", nullable = false)
-    private java.time.LocalDate startDate;
+    @Column(nullable = false, length = 20)
+    private String academicYear;
 
-    @Column(name = "end_date", nullable = false)
-    private java.time.LocalDate endDate;
+    @Column(nullable = false)
+    private LocalDate startDate;
+
+    @Column(nullable = false)
+    private LocalDate endDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

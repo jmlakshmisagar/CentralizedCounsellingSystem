@@ -8,8 +8,8 @@ import java.util.List;
 public interface CounsellingRoundRepository
         extends JpaRepository<CounsellingRound, Long> {
 
-    List<CounsellingRound> findByCounsellingSessionId(Long sessionId);
-
-    List<CounsellingRound> findByStatus(String status);
+    List<CounsellingRound> findByCounsellingSessionIdOrderByRoundNumber(
+            Long sessionId
+    );
 
 }

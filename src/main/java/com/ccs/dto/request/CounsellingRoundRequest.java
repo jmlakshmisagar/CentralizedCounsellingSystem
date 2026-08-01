@@ -1,6 +1,6 @@
 package com.ccs.dto.request;
 
-import com.ccs.enums.SessionStatus;
+import com.ccs.enums.RoundStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -10,13 +10,16 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class CounsellingSessionRequest {
+public class CounsellingRoundRequest {
+
+    @NotNull
+    private Long counsellingSessionId;
+
+    @NotNull
+    private Integer roundNumber;
 
     @NotBlank
-    private String sessionName;
-
-    @NotBlank
-    private String academicYear;
+    private String roundName;
 
     @NotNull
     private LocalDate startDate;
@@ -25,6 +28,6 @@ public class CounsellingSessionRequest {
     private LocalDate endDate;
 
     @NotNull
-    private SessionStatus status;
+    private RoundStatus status;
 
 }
