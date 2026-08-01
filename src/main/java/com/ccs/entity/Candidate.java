@@ -6,52 +6,47 @@ import com.ccs.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(
         name = "candidate",
         indexes = {
-                @Index(name = "idx_candidate_cet", columnList = "cet_number"),
-                @Index(name = "idx_candidate_rank", columnList = "candidate_rank")
+                @Index(name = "idx_candidate_application_number", columnList = "application_number"),
+                @Index(name = "idx_candidate_rank", columnList = "rank")
         }
 )
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Candidate extends BaseEntity {
 
-    @Column(name = "cet_number", nullable = false, unique = true)
-    private Long cetNumber;
+    @Column(name = "application_number", nullable = false, unique = true)
+    private Long applicationNumber;
 
-    @Column(name = "candidate_name", nullable = false, length = 150)
+    @Column(nullable = false, length = 150)
     private String candidateName;
+
+    @Column(nullable = false)
+    private Integer rank;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Gender gender;
-
-    @Column(nullable = false)
-    private Double marks;
-
-    @Column(name = "candidate_rank", nullable = false)
-    private Integer rank;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_category_id", nullable = false)
     private ReservationCategory reservationCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "session_id", nullable = false)
-    private CounsellingSession counsellingSession;
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 
-    @Column(nullable = false)
-    @Builder.Default
-    private Boolean allotted = false;
+    @Column(nullable = false, length = 15)
+    private String mobileNumber;
 
-    @Column(nullable = false)
-    @Builder.Default
-    private Boolean admitted = false;
+    @Column(nullable = false, length = 150)
+    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

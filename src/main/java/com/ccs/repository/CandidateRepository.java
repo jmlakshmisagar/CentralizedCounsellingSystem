@@ -5,10 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface CandidateRepository extends JpaRepository<Candidate, Long> {
+public interface CandidateRepository
+        extends JpaRepository<Candidate, Long> {
 
-    Optional<Candidate> findByCetNumber(Long cetNumber);
+    Optional<Candidate> findByApplicationNumber(Long applicationNumber);
 
-    boolean existsByCetNumber(Long cetNumber);
+    boolean existsByApplicationNumber(Long applicationNumber);
 
 }

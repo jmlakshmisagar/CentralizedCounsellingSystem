@@ -1,45 +1,27 @@
 package com.ccs.entity;
 
 import com.ccs.common.BaseEntity;
-import com.ccs.enums.PreferenceStatus;
+import com.ccs.enums.CandidatePreferenceStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(
         name = "candidate_preference",
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name = "uk_candidate_priority",
                         columnNames = {
                                 "candidate_id",
-                                "priority"
+                                "preference_order"
                         }
-                ),
-                @UniqueConstraint(
-                        name = "uk_candidate_college_course",
-                        columnNames = {
-                                "candidate_id",
-                                "college_course_id"
-                        }
-                )
-        },
-        indexes = {
-                @Index(
-                        name = "idx_candidate_preference_candidate",
-                        columnList = "candidate_id"
-                ),
-                @Index(
-                        name = "idx_candidate_preference_college_course",
-                        columnList = "college_course_id"
                 )
         }
 )
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class CandidatePreference extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -47,14 +29,18 @@ public class CandidatePreference extends BaseEntity {
     private Candidate candidate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "college_course_id", nullable = false)
-    private CollegeCourse collegeCourse;
+    @JoinColumn(name = "college_id", nullable = false)
+    private College college;
 
-    @Column(nullable = false)
-    private Integer priority;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+    @Column(name = "preference_order", nullable = false)
+    private Integer preferenceOrder;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PreferenceStatus status;
+    private CandidatePreferenceStatus status;
 
 }

@@ -1,0 +1,20 @@
+categoryCode,categoryName,status
+GM,General Merit,ACTIVE
+GMH,General Merit Hyderabad Karnataka,ACTIVE
+1G,Category 1 General,ACTIVE
+1H,Category 1 Hyderabad Karnataka,ACTIVE
+2AG,Category 2A General,ACTIVE
+2AH,Category 2A Hyderabad Karnataka,ACTIVE
+2BG,Category 2B General,ACTIVE
+2BH,Category 2B Hyderabad Karnataka,ACTIVE
+3AG,Category 3A General,ACTIVE
+3AH,Category 3A Hyderabad Karnataka,ACTIVE
+3BG,Category 3B General,ACTIVE
+3BH,Category 3B Hyderabad Karnataka,ACTIVE
+SCG,Scheduled Caste General,ACTIVE
+SCH,Scheduled Caste Hyderabad Karnataka,ACTIVE
+STG,Scheduled Tribe General,ACTIVE
+STH,Scheduled Tribe Hyderabad Karnataka,ACTIVE
+NKN,Non Karnataka,ACTIVE
+PH,Persons with Disabilities,ACTIVE
+XD,Ex Defence,ACTIVE
