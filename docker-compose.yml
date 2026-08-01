@@ -4,6 +4,8 @@ services:
     image: postgres:17
     container_name: ccs-postgres
 
+    restart: unless-stopped
+
     environment:
       POSTGRES_DB: ccs_db
       POSTGRES_USER: ccs_user
@@ -23,7 +25,10 @@ services:
 
   ccs-app:
     build: .
+
     container_name: ccs-app
+
+    restart: unless-stopped
 
     depends_on:
       postgres:
@@ -34,8 +39,6 @@ services:
 
     ports:
       - "8080:8080"
-
-    restart: unless-stopped
 
 volumes:
   postgres_data:

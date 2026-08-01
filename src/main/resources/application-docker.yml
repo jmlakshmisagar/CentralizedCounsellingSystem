@@ -4,7 +4,7 @@ server:
 spring:
 
   datasource:
-    url: jdbc:postgresql://ccs-postgres:5432/ccs_db
+    url: jdbc:postgresql://postgres:5432/ccs_db
     username: ccs_user
     password: ccs_password
     driver-class-name: org.postgresql.Driver
@@ -27,14 +27,9 @@ management:
       exposure:
         include: health,info,metrics
 
-  endpoint:
-    health:
-      show-details: always
-
 logging:
   level:
     root: INFO
-    com.ccs: DEBUG
 
 springdoc:
   api-docs:
