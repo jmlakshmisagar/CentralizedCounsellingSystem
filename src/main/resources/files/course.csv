@@ -1,4 +1,9 @@
-courseCode,courseName,duration,status
-MCA,Master of Computer Applications,2,ACTIVE
-MBA,Master of Business Administration,2,ACTIVE
-MTECH,Master of Technology,2,ACTIVE
+course_code,course_name,status
+CSE,Computer Science and Engineering,ACTIVE
+ISE,Information Science and Engineering,ACTIVE
+ECE,Electronics and Communication Engineering,ACTIVE
+EEE,Electrical and Electronics Engineering,ACTIVE
+ME,Mechanical Engineering,ACTIVE
+CV,Civil Engineering,ACTIVE
+AI,Artificial Intelligence and Machine Learning,ACTIVE
+DS,Data Science,ACTIVE
