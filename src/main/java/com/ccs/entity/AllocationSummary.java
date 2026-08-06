@@ -1,51 +1,39 @@
-package com.ccs.entity;
+package com.ccs.allocation.dto;
 
-import com.ccs.common.BaseEntity;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(
-        name = "allocation_summary",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "uk_allocation_summary_round",
-                        columnNames = "round_id"
-                )
-        }
-)
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class AllocationSummary extends BaseEntity {
+public class AllocationSummary {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "round_id", nullable = false)
-    private CounsellingRound counsellingRound;
+    private Long counsellingRoundId;
 
-    @Column(nullable = false)
-    private Integer totalCandidates;
+    private String roundName;
 
-    @Column(nullable = false)
-    private Integer allocatedCandidates;
+    @Builder.Default
+    private Integer totalCandidates = 0;
 
-    @Column(nullable = false)
-    private Integer unallocatedCandidates;
+    @Builder.Default
+    private Integer allocatedCandidates = 0;
 
-    @Column(nullable = false)
-    private Integer totalSeats;
+    @Builder.Default
+    private Integer notAllocatedCandidates = 0;
 
-    @Column(nullable = false)
-    private Integer allocatedSeats;
+    @Builder.Default
+    private LocalDateTime completedAt = LocalDateTime.now();
 
-    @Column(nullable = false)
-    private Integer remainingSeats;
-
-    @Column(nullable = false, precision = 5, scale = 2)
-    private BigDecimal allocationPercentage;
+    @Builder.Default
+    private List<AllocationResult> allocations = new ArrayList<>();
 
 }

@@ -5,54 +5,55 @@ import com.ccs.enums.AdmissionStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(
         name = "admission",
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name = "uk_admission_allocation",
-                        columnNames = "seat_allocation_id"
+                        columnNames = {
+                                "candidate_id",
+                                "counselling_round_id"
+                        }
                 )
         },
         indexes = {
-                @Index(
-                        name = "idx_admission_candidate",
-                        columnList = "candidate_id"
-                ),
-                @Index(
-                        name = "idx_admission_status",
-                        columnList = "status"
-                )
+                @Index(name = "idx_admission_candidate", columnList = "candidate_id"),
+                @Index(name = "idx_admission_round", columnList = "counselling_round_id")
         }
 )
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Admission extends BaseEntity {
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat_allocation_id", nullable = false)
-    private SeatAllocation seatAllocation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "candidate_id", nullable = false)
     private Candidate candidate;
 
-    @Column(name = "admission_date")
-    private LocalDate admissionDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "college_course_id", nullable = false)
+    private CollegeCourse collegeCourse;
 
-    @Column(name = "document_verified")
-    private Boolean documentVerified;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_category_id", nullable = false)
+    private ReservationCategory reservationCategory;
 
-    @Column(name = "fee_paid")
-    private Boolean feePaid;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "counselling_round_id", nullable = false)
+    private CounsellingRound counsellingRound;
+
+    @Column(nullable = false)
+    private Integer allottedRank;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AdmissionStatus status;
+
+    @Column(nullable = false)
+    private LocalDateTime allottedAt;
 
 }
