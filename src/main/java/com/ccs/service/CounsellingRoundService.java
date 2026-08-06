@@ -4,15 +4,19 @@ import com.ccs.dto.request.CounsellingRoundRequest;
 import com.ccs.dto.response.CounsellingRoundResponse;
 import com.ccs.entity.CounsellingRound;
 import com.ccs.entity.CounsellingSession;
+import com.ccs.exception.DuplicateResourceException;
+import com.ccs.exception.ResourceNotFoundException;
 import com.ccs.mapper.CounsellingRoundMapper;
 import com.ccs.repository.CounsellingRoundRepository;
 import com.ccs.repository.CounsellingSessionRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CounsellingRoundService {
@@ -21,27 +25,36 @@ public class CounsellingRoundService {
     private final CounsellingSessionRepository sessionRepository;
     private final CounsellingRoundMapper mapper;
 
-    public CounsellingRoundResponse create(
-            CounsellingRoundRequest request) {
+    @Transactional
+    public CounsellingRoundResponse create(CounsellingRoundRequest request) {
 
-        CounsellingSession session =
-                sessionRepository.findById(request.getCounsellingSessionId())
-                        .orElseThrow(() ->
-                                new EntityNotFoundException("Session not found"));
+        log.info("Creating counselling round {}", request.getRoundName());
 
-        CounsellingRound round = CounsellingRound.builder()
-                .counsellingSession(session)
-                .roundNumber(request.getRoundNumber())
-                .roundName(request.getRoundName())
-                .startDate(request.getStartDate())
-                .endDate(request.getEndDate())
-                .status(request.getStatus())
-                .build();
+        if (repository.existsByRoundName(request.getRoundName())) {
+            throw new DuplicateResourceException(
+                    "Counselling round already exists : " + request.getRoundName());
+        }
 
-        return mapper.toResponse(repository.save(round));
+        CounsellingSession session = sessionRepository.findById(request.getCounsellingSessionId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Counselling session not found with id : "
+                                        + request.getCounsellingSessionId()));
+
+        CounsellingRound round = mapper.toEntity(request);
+        round.setCounsellingSession(session);
+
+        CounsellingRound saved = repository.save(round);
+
+        log.info("Counselling round created successfully. Id={}", saved.getId());
+
+        return mapper.toResponse(saved);
     }
 
+    @Transactional(readOnly = true)
     public List<CounsellingRoundResponse> getAll() {
+
+        log.info("Fetching all counselling rounds");
 
         return repository.findAll()
                 .stream()
@@ -49,4 +62,59 @@ public class CounsellingRoundService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public CounsellingRoundResponse getById(Long id) {
+
+        log.info("Fetching counselling round {}", id);
+
+        CounsellingRound round = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Counselling round not found with id : " + id));
+
+        return mapper.toResponse(round);
+    }
+
+    @Transactional
+    public CounsellingRoundResponse update(
+            Long id,
+            CounsellingRoundRequest request) {
+
+        log.info("Updating counselling round {}", id);
+
+        CounsellingRound round = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Counselling round not found with id : " + id));
+
+        CounsellingSession session = sessionRepository.findById(request.getCounsellingSessionId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Counselling session not found with id : "
+                                        + request.getCounsellingSessionId()));
+
+        mapper.updateEntity(request, round);
+        round.setCounsellingSession(session);
+
+        CounsellingRound updated = repository.save(round);
+
+        log.info("Counselling round updated successfully {}", id);
+
+        return mapper.toResponse(updated);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+
+        log.info("Deleting counselling round {}", id);
+
+        CounsellingRound round = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Counselling round not found with id : " + id));
+
+        repository.delete(round);
+
+        log.info("Counselling round deleted successfully {}", id);
+    }
 }

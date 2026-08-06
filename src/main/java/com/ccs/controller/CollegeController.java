@@ -1,5 +1,6 @@
 package com.ccs.controller;
 
+import com.ccs.common.response.ApiResponse;
 import com.ccs.dto.request.CollegeRequest;
 import com.ccs.dto.response.CollegeResponse;
 import com.ccs.service.CollegeService;
@@ -19,42 +20,60 @@ public class CollegeController {
     private final CollegeService service;
 
     @PostMapping
-    public ResponseEntity<CollegeResponse> create(
+    public ResponseEntity<ApiResponse<CollegeResponse>> create(
             @Valid @RequestBody CollegeRequest request) {
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(service.create(request));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(
+                        "College created successfully",
+                        service.create(request)
+                ));
     }
 
     @GetMapping
-    public ResponseEntity<List<CollegeResponse>> getAll() {
+    public ResponseEntity<ApiResponse<List<CollegeResponse>>> getAll() {
 
-        return ResponseEntity.ok(service.getAll());
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Colleges fetched successfully",
+                        service.getAll()
+                )
+        );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CollegeResponse> getById(
+    public ResponseEntity<ApiResponse<CollegeResponse>> getById(
             @PathVariable Long id) {
 
-        return ResponseEntity.ok(service.getById(id));
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "College fetched successfully",
+                        service.getById(id)
+                )
+        );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CollegeResponse> update(
+    public ResponseEntity<ApiResponse<CollegeResponse>> update(
             @PathVariable Long id,
             @Valid @RequestBody CollegeRequest request) {
 
-        return ResponseEntity.ok(service.update(id, request));
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "College updated successfully",
+                        service.update(id, request)
+                )
+        );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(
+    public ResponseEntity<ApiResponse<Void>> delete(
             @PathVariable Long id) {
 
         service.delete(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(
+                ApiResponse.success("College deleted successfully")
+        );
     }
-
 }

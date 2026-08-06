@@ -1,5 +1,6 @@
 package com.ccs.controller;
 
+import com.ccs.common.response.ApiResponse;
 import com.ccs.dto.request.CandidatePreferenceRequest;
 import com.ccs.dto.response.CandidatePreferenceResponse;
 import com.ccs.service.CandidatePreferenceService;
@@ -19,19 +20,24 @@ public class CandidatePreferenceController {
     private final CandidatePreferenceService service;
 
     @PostMapping
-    public ResponseEntity<CandidatePreferenceResponse> create(
+    public ResponseEntity<ApiResponse<CandidatePreferenceResponse>> create(
             @Valid @RequestBody CandidatePreferenceRequest request) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.create(request));
+                .body(ApiResponse.success(
+                        "Candidate preference created successfully",
+                        service.create(request)
+                ));
     }
 
     @GetMapping
-    public ResponseEntity<List<CandidatePreferenceResponse>> getAll() {
+    public ResponseEntity<ApiResponse<List<CandidatePreferenceResponse>>> getAll() {
 
         return ResponseEntity.ok(
-                service.getAll()
+                ApiResponse.success(
+                        "Candidate preferences fetched successfully",
+                        service.getAll()
+                )
         );
     }
-
 }

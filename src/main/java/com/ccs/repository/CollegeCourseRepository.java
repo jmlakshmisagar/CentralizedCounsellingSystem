@@ -12,4 +12,6 @@ public interface CollegeCourseRepository
 
     List<CollegeCourse> findByCourseId(Long courseId);
 
+    boolean existsByCollegeIdAndCourseId(Long collegeId, Long courseId);
+
 }

@@ -1,5 +1,6 @@
 package com.ccs.controller;
 
+import com.ccs.common.response.ApiResponse;
 import com.ccs.dto.request.CollegeCourseRequest;
 import com.ccs.dto.response.CollegeCourseResponse;
 import com.ccs.service.CollegeCourseService;
@@ -19,17 +20,24 @@ public class CollegeCourseController {
     private final CollegeCourseService service;
 
     @PostMapping
-    public ResponseEntity<CollegeCourseResponse> create(
+    public ResponseEntity<ApiResponse<CollegeCourseResponse>> create(
             @Valid @RequestBody CollegeCourseRequest request) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.create(request));
+                .body(ApiResponse.success(
+                        "College course created successfully",
+                        service.create(request)
+                ));
     }
 
     @GetMapping
-    public ResponseEntity<List<CollegeCourseResponse>> getAll() {
+    public ResponseEntity<ApiResponse<List<CollegeCourseResponse>>> getAll() {
 
-        return ResponseEntity.ok(service.getAll());
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "College courses fetched successfully",
+                        service.getAll()
+                )
+        );
     }
-
 }

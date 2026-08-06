@@ -1,5 +1,6 @@
 package com.ccs.controller;
 
+import com.ccs.common.response.ApiResponse;
 import com.ccs.dto.request.SeatMatrixRequest;
 import com.ccs.dto.response.SeatMatrixResponse;
 import com.ccs.service.SeatMatrixService;
@@ -19,17 +20,24 @@ public class SeatMatrixController {
     private final SeatMatrixService service;
 
     @PostMapping
-    public ResponseEntity<SeatMatrixResponse> create(
+    public ResponseEntity<ApiResponse<SeatMatrixResponse>> create(
             @Valid @RequestBody SeatMatrixRequest request) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.create(request));
+                .body(ApiResponse.success(
+                        "Seat matrix created successfully",
+                        service.create(request)
+                ));
     }
 
     @GetMapping
-    public ResponseEntity<List<SeatMatrixResponse>> getAll() {
+    public ResponseEntity<ApiResponse<List<SeatMatrixResponse>>> getAll() {
 
-        return ResponseEntity.ok(service.getAll());
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Seat matrix fetched successfully",
+                        service.getAll()
+                )
+        );
     }
-
 }

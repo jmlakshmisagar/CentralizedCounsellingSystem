@@ -1,5 +1,6 @@
 package com.ccs.controller;
 
+import com.ccs.common.response.ApiResponse;
 import com.ccs.dto.request.CandidateRequest;
 import com.ccs.dto.response.CandidateResponse;
 import com.ccs.service.CandidateService;
@@ -19,17 +20,24 @@ public class CandidateController {
     private final CandidateService service;
 
     @PostMapping
-    public ResponseEntity<CandidateResponse> create(
+    public ResponseEntity<ApiResponse<CandidateResponse>> create(
             @Valid @RequestBody CandidateRequest request) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.create(request));
+                .body(ApiResponse.success(
+                        "Candidate created successfully",
+                        service.create(request)
+                ));
     }
 
     @GetMapping
-    public ResponseEntity<List<CandidateResponse>> getAll() {
+    public ResponseEntity<ApiResponse<List<CandidateResponse>>> getAll() {
 
-        return ResponseEntity.ok(service.getAll());
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Candidates fetched successfully",
+                        service.getAll()
+                )
+        );
     }
-
 }

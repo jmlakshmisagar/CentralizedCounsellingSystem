@@ -12,4 +12,6 @@ public interface CounsellingRoundRepository
             Long sessionId
     );
 
+    boolean existsByRoundName(String roundName);
+
 }
